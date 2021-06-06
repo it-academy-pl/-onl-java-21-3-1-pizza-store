@@ -1,5 +1,8 @@
 package itacademy.pizzastore.domain;
 
 public enum PaymentType {
-    CASH, CARD, BIT_COIN
+
+    CASH,
+    CARD,
+    BIT_COIN
 }
