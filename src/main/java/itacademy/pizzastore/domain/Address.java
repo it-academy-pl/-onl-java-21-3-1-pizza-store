@@ -9,4 +9,5 @@ public class Address {
     String houseNumber;
     String flatNumber;
     String postCode;
+    String mobilephone;
 }
