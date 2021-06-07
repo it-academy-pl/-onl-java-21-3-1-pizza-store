@@ -7,8 +7,7 @@ import java.util.List;
 
 @Value
 public class Pizza {
-
-    String id;
+    long id;
     Size size;
     String name;
     BigDecimal price;

@@ -1,7 +1,6 @@
 package itacademy.pizzastore.domain;
 
 public enum Status {
-
     NEW,
     PAYED,
     BAKING,
