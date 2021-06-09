@@ -1,31 +1,27 @@
 package itacademy.pizzastore.web;
 
-import itacademy.pizzastore.HelloSpringWeb;
 import itacademy.pizzastore.service.PaymentService;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import lombok.Setter;
-import lombok.Value;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.stream.Collectors;
-
 @RestController
+@RequiredArgsConstructor
 @RequestMapping("/pay")
 public class PaymentController {
 
-    private PaymentService paymentService;
-
-    public PaymentController(PaymentService paymentService) {
-        this.paymentService = paymentService;
-    }
+    private final PaymentService paymentService;
 
     @GetMapping("pay/{id}")
-    public PaymentResponse letPayForOrder(@PathVariable long id) {
-        return new PaymentResponse("Please, pay for order " + id + ".");
+    public ResponseEntity<Void> letPayForOrder(@PathVariable long id) {
+        paymentService.payForOrder(id);
+        return ResponseEntity.ok().build();
     }
 
     @AllArgsConstructor
@@ -34,6 +30,5 @@ public class PaymentController {
     private static class PaymentResponse {
         private String message;
     }
-
 
 }

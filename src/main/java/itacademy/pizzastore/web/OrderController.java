@@ -2,34 +2,46 @@ package itacademy.pizzastore.web;
 
 import itacademy.pizzastore.domain.*;
 import itacademy.pizzastore.service.OrderService;
+import lombok.RequiredArgsConstructor;
 import lombok.Value;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
-import java.util.stream.Collectors;
 
 
 @RestController
+@RequiredArgsConstructor
 @RequestMapping("/order")
 public class OrderController {
 
-    private OrderService orderService;
+    private final OrderService orderService;
 
-    public OrderController(OrderService orderService) {
-        this.orderService = orderService;
+    @PostMapping
+    public OrderResponse createOrder(@RequestBody List<Pizza> pizzas) {
+        return OrderResponse.from(orderService.create(pizzas));
     }
 
-    @GetMapping("/orderList")
-    public List<OrderResponse> getAvailableOrders(){
-        return orderService.create().stream()
-                .map(OrderResponse::from)
-                .collect(Collectors.toList());
+    @PutMapping("/{id}/address")
+    public OrderResponse orderAddress(@PathVariable("id") long orderId, @RequestBody Address address) {
+        return OrderResponse.from(orderService.provideDeliveryAddress(orderId, address));
+    }
+
+    @DeleteMapping("/{id}")
+    public Status orderCancel(@PathVariable("id") long orderId) {
+        return orderService.cancel(orderId);
+    }
+
+    @GetMapping("/{id}/status")
+    public Status orderStatus(@PathVariable("id") long orderId) {
+        return orderService.getStatusForOrder(orderId);
+    }
+
+    @PostMapping("/{id}/rate")
+    public ResponseEntity<Void> orderRate(@PathVariable("id") long orderId, @RequestBody Rating rating) {
+        orderService.rateOrder(orderId, rating);
+        return ResponseEntity.ok().build();
     }
 
     @Value
@@ -44,7 +56,7 @@ public class OrderController {
         int deliveryTimeInMinutes;
         PaymentType paymentType;
 
-        public static OrderResponse from(Order order){
+        public static OrderResponse from(Order order) {
             return new OrderResponse(
                     order.getId(),
                     order.getPizzas(),
@@ -57,27 +69,4 @@ public class OrderController {
             );
         }
     }
-
-    @GetMapping("/provideAddress/{id}")
-    public Status orderAddress(@PathVariable long orderId, Address address){
-        return orderService.provideDeliveryAddress(orderId, address);
-    }
-
-    @GetMapping("/cancel/{id}")
-    public Status orderCancel(@PathVariable long orderId){
-        return orderService.cancel(orderId);
-    }
-
-    @GetMapping("/status/{id}")
-    public Status orderStatus(@PathVariable long orderId){
-        return orderService.getStatusForOrder(orderId);
-    }
-
-    @GetMapping("/rate/{id}")
-    public Status orderRate(@PathVariable long orderId, Rating rating){
-        return orderService.rateOrder(orderId, Rating rating);
-    }
-
-
-
 }

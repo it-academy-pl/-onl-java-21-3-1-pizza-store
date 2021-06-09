@@ -1,9 +1,8 @@
 package itacademy.pizzastore.web;
 
 import itacademy.pizzastore.domain.Ingredient;
-import itacademy.pizzastore.domain.Pizza;
-import itacademy.pizzastore.domain.Size;
 import itacademy.pizzastore.service.IngredientService;
+import lombok.RequiredArgsConstructor;
 import lombok.Value;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -14,14 +13,11 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
+@RequiredArgsConstructor
 @RequestMapping("/ingredients")
 public class IngredientController {
 
-    private IngredientService ingredientService;
-
-    public IngredientController(IngredientService ingredientService){
-        this.ingredientService = ingredientService;
-    }
+    private final IngredientService ingredientService;
 
     @GetMapping("/list")
     public List<IngredientResponse> getAvailableIngredients() {
