@@ -1,17 +1,32 @@
 package itacademy.pizzastore.service;
 
 import itacademy.pizzastore.domain.*;
+import itacademy.pizzastore.repository.OrderRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class OrderService {
+
+    private final OrderRepository orderRepository;
+
     public Order create(List<Pizza> pizzas) {
-        return null;
+        BigDecimal totalPrice = pizzas.stream()
+                .map(Pizza::getPrice)
+                .reduce(BigDecimal.ZERO, BigDecimal::add);
+
+        return new Order(pizzas, null, "", totalPrice, Status.NEW, 0, null);
     }
 
     public Order provideDeliveryAddress(long orderId, Address deliveryAddress) {
+        return null;
+    }
+
+    public Order choosePaymentType(long orderId, PaymentType paymentType) {
         return null;
     }
 
