@@ -38,6 +38,10 @@ public class OrderService {
         return null;
     }
 
+    public Order provideDeliveryTime(int deliveryTime) {
+        return null;
+    }
+
     public void rateOrder(long orderId, Rating rating) {
 
     }
