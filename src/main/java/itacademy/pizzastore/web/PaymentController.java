@@ -14,7 +14,7 @@ public class PaymentController {
     @GetMapping("/pay/{id}")
     public String payForOrder(@PathVariable long id){
         paymentService.payForOrder(id);
-        return String.format("You pay for order number %d.", id);
+        return String.format("You paid for order number %d.", id);
     }
 
 
