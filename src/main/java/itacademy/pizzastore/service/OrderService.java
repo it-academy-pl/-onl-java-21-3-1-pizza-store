@@ -19,7 +19,9 @@ public class OrderService {
                 .map(Pizza::getPrice)
                 .reduce(BigDecimal.ZERO, BigDecimal::add);
 
-        return new Order(pizzas, null, "", totalPrice, Status.NEW, 0, null);
+        var newOrder = new Order(pizzas, null, "", totalPrice, Status.NEW, 0, null);
+        orderRepository.save(newOrder);
+        return newOrder;
     }
 
     public Order provideDeliveryAddress(long orderId, Address deliveryAddress) {
