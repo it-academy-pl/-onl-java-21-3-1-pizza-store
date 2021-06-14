@@ -18,18 +18,27 @@ public class OrderService {
         BigDecimal totalPrice = pizzas.stream()
                 .map(Pizza::getPrice)
                 .reduce(BigDecimal.ZERO, BigDecimal::add);
-
+      
         var newOrder = new Order(pizzas, null, "", totalPrice, Status.NEW, 0, null);
         orderRepository.save(newOrder);
         return newOrder;
     }
 
     public Order provideDeliveryAddress(long orderId, Address deliveryAddress) {
-        return null;
+        (String city) -> System.out.print(city);
+        (String street) -> System.out.print(street);
+        (String hoseNumber) -> System.out.print(hoseNumber);
+        (String flatNumber) -> System.out.print(flatNumber);
     }
 
     public Order choosePaymentType(long orderId, PaymentType paymentType) {
-        return null;
+        PaymentType allPaymentTypes [] = PaymentType.values();
+        for (PaymentType p: allPaymentTypes)
+            System.out.println(p);
+        System.out.println();
+
+        PaymentType pt = PaymentType.valueOf("CASH");
+                return pt;
     }
 
     public Status cancel(long orderId) {
@@ -37,7 +46,13 @@ public class OrderService {
     }
 
     public Status getStatusForOrder(long orderId) {
-        return null;
+        Status allStatuses [] = Status.values();
+        for (Status s: allStatuses)
+            System.out.println(s);
+        System.out.println();
+
+        Status st = Status.valueOf("IN_THE_WAY");
+        return st;
     }
 
     public Order provideDeliveryTime(int deliveryTime) {
@@ -45,6 +60,17 @@ public class OrderService {
     }
 
     public void rateOrder(long orderId, Rating rating) {
+        int mark;
+        String opinion;
+        if (mark >= 0 && mark <= 3) {
+            System.out.println(orderId + ": " + opinion + "is bed");
+        }
+        if (mark > 3 && mark < 7) {
+            System.out.println(orderId + ": " + opinion + "is mediocre");
+        }
+        if (mark >= 7 && mark <= 10) {
+            System.out.println(orderId + opinion + "is very good");
+        }
 
     }
 
