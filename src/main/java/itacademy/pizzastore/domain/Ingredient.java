@@ -1,12 +1,14 @@
 package itacademy.pizzastore.domain;
 
-import lombok.Value;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
 
-@Value
+@Data
+@NoArgsConstructor
 public class Ingredient {
-    long id;
-    String name;
-    BigDecimal price;
+    private long id;
+    private String name;
+    private BigDecimal price;
 }

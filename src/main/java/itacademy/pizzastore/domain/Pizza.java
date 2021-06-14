@@ -1,16 +1,20 @@
 package itacademy.pizzastore.domain;
 
-import lombok.Value;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
 import java.util.List;
 
-@Value
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class Pizza {
-    long id;
-    Size size;
-    String name;
-    BigDecimal price;
-    List<String> ingredients;
-    List<Ingredient> additionalIngredients;
+    private long id;
+    private Size size;
+    private String name;
+    private BigDecimal price;
+    private List<String> ingredients;
+    private List<Ingredient> additionalIngredients;
 }
