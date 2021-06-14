@@ -11,5 +11,6 @@ public class Pizza {
     Size size;
     String name;
     BigDecimal price;
-    List<Ingredient> ingredients;
+    List<String> ingredients;
+    List<Ingredient> additionalIngredients;
 }

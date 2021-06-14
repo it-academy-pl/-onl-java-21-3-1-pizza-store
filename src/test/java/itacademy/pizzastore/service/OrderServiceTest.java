@@ -24,8 +24,8 @@ class OrderServiceTest {
 
     @Test
     public void createGetAllPricesFromPizzasToOrder() {
-        Pizza one = new Pizza(1, Size.LARGE, "1", BigDecimal.TEN, List.of());
-        Pizza two = new Pizza(1, Size.LARGE, "2", BigDecimal.ONE, List.of());
+        Pizza one = new Pizza(1, Size.LARGE, "1", BigDecimal.TEN, List.of(), List.of());
+        Pizza two = new Pizza(1, Size.LARGE, "2", BigDecimal.ONE, List.of(), List.of());
 
         Order result = orderService.create(List.of(one, two));
 
@@ -34,7 +34,7 @@ class OrderServiceTest {
 
     @Test
     public void getStatusForOrderReturnsOrderStatus() {
-        Pizza one = new Pizza(1, Size.LARGE, "1", BigDecimal.TEN, List.of());
+        Pizza one = new Pizza(1, Size.LARGE, "1", BigDecimal.TEN, List.of(), List.of());
         Order order = new Order(123, List.of(one), null, "123-456-789", BigDecimal.TEN, Status.PAYED, 30, PaymentType.CASH, null);
         orderRepository.save(order);
 
