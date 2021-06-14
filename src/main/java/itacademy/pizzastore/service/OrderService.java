@@ -18,11 +18,10 @@ public class OrderService {
         BigDecimal totalPrice = pizzas.stream()
                 .map(Pizza::getPrice)
                 .reduce(BigDecimal.ZERO, BigDecimal::add);
-
-        Order newOrder = new Order(pizzas, null, "", totalPrice, Status.NEW, 0, null);
+      
+        var newOrder = new Order(pizzas, null, "", totalPrice, Status.NEW, 0, null);
         orderRepository.save(newOrder);
         return newOrder;
-
     }
 
     public Order provideDeliveryAddress(long orderId, Address deliveryAddress) {
