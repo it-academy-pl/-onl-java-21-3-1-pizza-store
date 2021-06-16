@@ -36,8 +36,9 @@ class OrderServiceTest {
         Order address = new Order(11, List.of(), null, "123-456-789", BigDecimal.TEN, Status.PAYED, 30, PaymentType.CASH, null);
         orderRepository.save(address);
 
-        Order location = orderService.provideDeliveryAddress(11, null);
-        assertThat(location.getDeliveryAddress()).isEqualTo(null);
+        Address deliveryAddress = new Address("Katowice", "Independence", "21", "12", "11-221");
+        Order location = orderService.provideDeliveryAddress(11, deliveryAddress);
+        assertThat(location.getDeliveryAddress()).isEqualTo(deliveryAddress);
     }
 
     @Test
@@ -61,13 +62,13 @@ class OrderServiceTest {
     @Test
     public void getPaymentTypeReturnPaymentType() {
         Pizza two = new Pizza(1, Size.LARGE, "2", BigDecimal.ONE, List.of(), List.of());
-        Order order = new Order(124, List.of(two), null, "223-456-789", BigDecimal.ONE, Status.PAYED, 25, PaymentType.CARD);
-        OrderRepository.save(order);
+        Order order = new Order(124, List.of(two), null, "223-456-789", BigDecimal.ONE, Status.PAYED, 25, PaymentType.CARD, null);
+        orderRepository.save(order);
 
-        order result = orderService.getStatusForOrder(124, PaymentType.CARD);
-        assertThat(result).isEqualTo(PaymentType.CARD);
+        Status result = orderService.getStatusForOrder(124);
+        assertThat(result).isEqualTo(Status.PAYED);
     }
-  
+
 
     @Test
     public void getStatusForOrderReturnsOrderStatus() {
@@ -98,14 +99,14 @@ class OrderServiceTest {
         Order order = new Order(332, List.of(), null, "333-444-555", BigDecimal.TEN, Status.NEW, 35, PaymentType.CASH, null);
         orderRepository.save(order);
 
-        Order rank = orderService.rateOrder(332, null);
-        assertThat(rank.getRating()).isEqualTo(null);
+        Rating rating = new Rating(5, "The best pizza I ever eaten before!");
+        Order rank = orderService.rateOrder(332, rating);
+        assertThat(rank.getRating()).isEqualTo(rating);
     }
 
 
-
     @Test
-    public void checkPaymentType(){
+    public void checkPaymentType() {
         Order order = new Order(123, List.of(), null, "123-456-789", BigDecimal.TEN, Status.PAYED, 30, null, null);
         orderRepository.save(order);
         orderService.choosePaymentType(123, PaymentType.CARD);
@@ -116,25 +117,25 @@ class OrderServiceTest {
     @Test
     public void getDeliveryTimeInMinutes() {
         Pizza two = new Pizza(1, Size.LARGE, "2", BigDecimal.ONE, List.of(), List.of());
-        Order order = new Order(124, List.of(two), null, "223-456-789", BigDecimal.ONE, Status.PAYED, 25, PaymentType.CARD);
-        OrderRepository.save(order);
+        Order order = new Order(124, List.of(two), null, "223-456-789", BigDecimal.ONE, Status.PAYED, 25, PaymentType.CARD, null);
+        orderRepository.save(order);
 
-        Order result = orderService.getStatusForOrder(124, getDeliveryTimeInMinutes(25));
-        assertThat(result).isEqualTo(25);
+        Order result = orderService.provideDeliveryTime(124, 25);
+        assertThat(result.getDeliveryTimeInMinutes()).isEqualTo(25);
     }
 
     @Test
-    public void cancelOrder(){
+    public void cancelOrder() {
         Order order = new Order(123, List.of(), null, "123-456-789", BigDecimal.TEN, Status.NEW, 30, null, null);
         orderRepository.save(order);
         orderService.cancel(123);
         Status result = orderRepository.getById(123).getStatus();
 
-        assertThat(result).isEqualTo(Status.ANULLED);
+        assertThat(result).isEqualTo(Status.CANCELLED);
     }
 
     @Test
-    public void checkDeliveryTime(){
+    public void checkDeliveryTime() {
         Order order = new Order(123, List.of(), null, "123-456-789", BigDecimal.TEN, Status.NEW, 30, null, null);
         orderRepository.save(order);
         orderService.provideDeliveryTime(123, 50);
@@ -144,11 +145,11 @@ class OrderServiceTest {
     }
 
     @Test
-    public void checkRate(){
+    public void checkRate() {
         Order order = new Order(123, List.of(), null, "123-456-789", BigDecimal.TEN, Status.NEW, 30, null, null);
         orderRepository.save(order);
         Rating rating = new Rating(5, "very good");
-        orderService.rateOrder(123,rating);
+        orderService.rateOrder(123, rating);
         Rating result = orderRepository.getById(123).getRating();
 
         assertThat(result).isEqualTo(rating);

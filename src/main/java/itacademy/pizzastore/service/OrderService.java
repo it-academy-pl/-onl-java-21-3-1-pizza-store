@@ -40,7 +40,7 @@ public class OrderService {
 
     public Status cancel(long orderId) {
         var order = orderRepository.getById(orderId);
-        order.setStatus(Status.ANULLED);
+        order.setStatus(Status.CANCELLED);
         orderRepository.save(order);
         return order.getStatus();
     }
