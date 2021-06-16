@@ -43,7 +43,10 @@ public class OrderService {
     }
 
     public Status cancel(long orderId) {
-        return null;
+        var status = orderRepository.getById(orderId);
+        status.setStatus(Status.CANCEL);
+        orderRepository.save(status);
+        return status;
     }
 
     public Status getStatusForOrder(long orderId) {
@@ -56,23 +59,20 @@ public class OrderService {
         return st;
     }
 
-    public Order provideDeliveryTime(int deliveryTime) {
-        return null;
+    public Order provideDeliveryTime(long orderId, int deliveryTime) {
+        var order = orderRepository.getById(orderId);
+        order.setDeliveryTimeInMinutes(deliveryTime);
+        orderRepository.save(order);
+        return order;
     }
 
     public void rateOrder(long orderId, Rating rating) {
-        int mark;
-        String opinion;
-        if (mark >= 0 && mark <= 3) {
-            System.out.println(orderId + ": " + opinion + "is bed");
-        }
-        if (mark > 3 && mark < 7) {
-            System.out.println(orderId + ": " + opinion + "is mediocre");
-        }
-        if (mark >= 7 && mark <= 10) {
-            System.out.println(orderId + opinion + "is very good");
-        }
+        var rateOrder = orderRepository.getById(orderId);
+        rateOrder.setRating(rating);
+        orderRepository.save(rateOrder);
+    }
+
 
     }
 
-}
+

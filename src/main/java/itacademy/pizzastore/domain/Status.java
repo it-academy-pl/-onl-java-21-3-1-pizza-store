@@ -6,5 +6,6 @@ public enum Status {
     BAKING,
     BAKED,
     IN_THE_WAY,
-    DELIVERED
+    DELIVERED,
+    CANCEL
 }
