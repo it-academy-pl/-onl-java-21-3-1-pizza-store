@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -15,6 +16,11 @@ public class IngredientService {
 
     public Collection<Ingredient> availableIngredients() {
         return configuration.getAdditionalIngredients().values();
+    }
+
+    //TODO: implement the method
+    public List<Ingredient> fromIds(List<Long> ids) {
+        return List.of();
     }
 
     public Ingredient typesIngredient() {

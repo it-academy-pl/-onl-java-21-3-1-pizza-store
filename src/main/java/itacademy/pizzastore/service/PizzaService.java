@@ -1,7 +1,6 @@
 package itacademy.pizzastore.service;
 
 import itacademy.pizzastore.config.ApplicationConfiguration;
-import itacademy.pizzastore.domain.Ingredient;
 import itacademy.pizzastore.domain.Pizza;
 import itacademy.pizzastore.domain.Size;
 import lombok.RequiredArgsConstructor;
@@ -15,12 +14,19 @@ import java.util.List;
 public class PizzaService {
 
     private final ApplicationConfiguration configuration;
+    private final IngredientService ingredientService;
 
     public Collection<Pizza> availablePizzas() {
         return configuration.getPizzas().values();
     }
 
-    public Pizza customPizza(List<Ingredient> ingredients, Size size) {
+    //TODO: implement the method
+    public Pizza customPizza(List<Long> ingredientIds, Size size) {
         return null;
+    }
+
+    //TODO: implelent the method
+    public List<Pizza> fromIds(List<Long> ids) {
+        return List.of();
     }
 }

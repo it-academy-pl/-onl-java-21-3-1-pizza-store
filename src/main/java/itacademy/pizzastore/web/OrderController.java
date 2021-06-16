@@ -4,6 +4,7 @@ import itacademy.pizzastore.domain.*;
 import itacademy.pizzastore.service.OrderService;
 import lombok.RequiredArgsConstructor;
 import lombok.Value;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,13 +15,21 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/order")
+//TODO: validate client's requests where applicable and if something wrong - return error response immediately!
 public class OrderController {
 
     private final OrderService orderService;
 
     @PostMapping
-    public OrderResponse createOrder(@RequestBody List<Pizza> pizzas) {
-        return OrderResponse.from(orderService.create(pizzas));
+    public ResponseEntity<OrderResponse> createOrder(@RequestBody List<Long> pizzas) {
+        if(pizzas == null || pizzas.isEmpty()) {
+            return ResponseEntity.badRequest().build();
+        }
+
+        //TODO: fix the compilation error
+        return ResponseEntity
+                .status(HttpStatus.CREATED)
+                .body(OrderResponse.from(orderService.create(pizzas)));
     }
 
     @PutMapping("/{id}/address")

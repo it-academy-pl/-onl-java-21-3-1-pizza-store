@@ -23,7 +23,7 @@ class OrderServiceTest {
     }
 
     @Test
-    public void createGetAllPricesFromPizzasToOrder() {
+    public void create_getsAllPricesFromPizzasToOrder() {
         Pizza one = new Pizza(1, Size.LARGE, "1", BigDecimal.TEN, List.of(), List.of());
         Pizza two = new Pizza(1, Size.LARGE, "2", BigDecimal.ONE, List.of(), List.of());
 
@@ -32,7 +32,7 @@ class OrderServiceTest {
     }
 
     @Test
-    public void provideDeliveryAddressReturnsRealAddress() {
+    public void provideDeliveryAddress_ReturnsRealAddress() {
         Order address = new Order(11, List.of(), null, "123-456-789", BigDecimal.TEN, Status.PAYED, 30, PaymentType.CASH, null);
         orderRepository.save(address);
 
@@ -42,7 +42,7 @@ class OrderServiceTest {
     }
 
     @Test
-    public void choosePaymentTypeReturnsActualType() {
+    public void choosePaymentType_returnsActualType() {
         Order payType = new Order(120, List.of(), null, "123-456-789", BigDecimal.TEN, Status.PAYED, 30, PaymentType.CASH, null);
         orderRepository.save(payType);
 
@@ -51,7 +51,7 @@ class OrderServiceTest {
     }
 
     @Test
-    public void cancelTheOrder() {
+    public void cancel_cancelsTheOrder() {
         Order cancellation = new Order(60, List.of(), null, "123-456-789", BigDecimal.TEN, Status.CANCELLED, 30, PaymentType.CASH, null);
         orderRepository.save(cancellation);
 
@@ -60,7 +60,7 @@ class OrderServiceTest {
     }
 
     @Test
-    public void getPaymentTypeReturnPaymentType() {
+    public void getPaymentType_ReturnPaymentType() {
         Pizza two = new Pizza(1, Size.LARGE, "2", BigDecimal.ONE, List.of(), List.of());
         Order order = new Order(124, List.of(two), null, "223-456-789", BigDecimal.ONE, Status.PAYED, 25, PaymentType.CARD, null);
         orderRepository.save(order);
@@ -71,7 +71,7 @@ class OrderServiceTest {
 
 
     @Test
-    public void getStatusForOrderReturnsOrderStatus() {
+    public void getStatusForOrder_ReturnsOrderStatus() {
         Pizza one = new Pizza(1, Size.LARGE, "1", BigDecimal.TEN, List.of(), List.of());
         Order order = new Order(123, List.of(one), null, "123-456-789", BigDecimal.TEN, Status.PAYED, 30, PaymentType.CASH, null);
         orderRepository.save(order);
@@ -81,7 +81,7 @@ class OrderServiceTest {
     }
 
     @Test
-    public void provideDeliveryTimeReturnsInputtedValue() {
+    public void provideDeliveryTime_ReturnsInputtedValue() {
         Order orderTime = new Order(332, List.of(), null, "333-444-555", BigDecimal.TEN, Status.NEW, 35, PaymentType.CASH, null);
         Order orderTime2 = new Order(333, List.of(), null, "333-444-555", BigDecimal.TEN, Status.NEW, 40, PaymentType.CASH, null);
         orderRepository.save(orderTime);
@@ -95,7 +95,7 @@ class OrderServiceTest {
     }
 
     @Test
-    public void rateOrderReturnMark() {
+    public void rateOrder_appliesRating() {
         Order order = new Order(332, List.of(), null, "333-444-555", BigDecimal.TEN, Status.NEW, 35, PaymentType.CASH, null);
         orderRepository.save(order);
 
@@ -106,7 +106,7 @@ class OrderServiceTest {
 
 
     @Test
-    public void checkPaymentType() {
+    public void choosePaymentType_changesPaymentTypeForOrder() {
         Order order = new Order(123, List.of(), null, "123-456-789", BigDecimal.TEN, Status.PAYED, 30, null, null);
         orderRepository.save(order);
         orderService.choosePaymentType(123, PaymentType.CARD);
@@ -115,7 +115,7 @@ class OrderServiceTest {
     }
 
     @Test
-    public void getDeliveryTimeInMinutes() {
+    public void provideDeliveryTime_addsDeliveryTimeInMinutes() {
         Pizza two = new Pizza(1, Size.LARGE, "2", BigDecimal.ONE, List.of(), List.of());
         Order order = new Order(124, List.of(two), null, "223-456-789", BigDecimal.ONE, Status.PAYED, 25, PaymentType.CARD, null);
         orderRepository.save(order);
@@ -125,7 +125,7 @@ class OrderServiceTest {
     }
 
     @Test
-    public void cancelOrder() {
+    public void cancelOrder_changesOrderStatusToCanceled() {
         Order order = new Order(123, List.of(), null, "123-456-789", BigDecimal.TEN, Status.NEW, 30, null, null);
         orderRepository.save(order);
         orderService.cancel(123);
@@ -135,7 +135,7 @@ class OrderServiceTest {
     }
 
     @Test
-    public void checkDeliveryTime() {
+    public void provideDeliveryTime_addsDeliveryTimeToOrder() {
         Order order = new Order(123, List.of(), null, "123-456-789", BigDecimal.TEN, Status.NEW, 30, null, null);
         orderRepository.save(order);
         orderService.provideDeliveryTime(123, 50);
@@ -145,7 +145,7 @@ class OrderServiceTest {
     }
 
     @Test
-    public void checkRate() {
+    public void rateOrder_addsRatingToOrder() {
         Order order = new Order(123, List.of(), null, "123-456-789", BigDecimal.TEN, Status.NEW, 30, null, null);
         orderRepository.save(order);
         Rating rating = new Rating(5, "very good");
