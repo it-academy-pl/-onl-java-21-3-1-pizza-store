@@ -39,14 +39,10 @@ public class OrderService {
     }
 
     public Status cancel(long orderId) {
-//        return orderRepository.getById(orderId) -> cancel(orderId);
-//        return orderRepository.getById(orderId).setStatus(Status.CANCELLED);
-//        return cancel(orderId);
-        var newStatus = orderRepository.getById(orderId);
-        newStatus.setStatus(Status.CANCELLED);
-        orderRepository.save(newStatus);
-        return cancel(orderId);
-
+        var order = orderRepository.getById(orderId);
+        order.setStatus(Status.ANULLED);
+        orderRepository.save(order);
+        return order.getStatus();
     }
 
     public Status getStatusForOrder(long orderId) {
@@ -66,5 +62,4 @@ public class OrderService {
         orderRepository.save(order);
         return order;
     }
-
 }
