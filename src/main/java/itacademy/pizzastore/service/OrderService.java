@@ -39,7 +39,14 @@ public class OrderService {
     }
 
     public Status cancel(long orderId) {
-        return null;
+//        return orderRepository.getById(orderId) -> cancel(orderId);
+//        return orderRepository.getById(orderId).setStatus(Status.CANCELLED);
+//        return cancel(orderId);
+        var newStatus = orderRepository.getById(orderId);
+        newStatus.setStatus(Status.CANCELLED);
+        orderRepository.save(newStatus);
+        return cancel(orderId);
+
     }
 
     public Status getStatusForOrder(long orderId) {
@@ -47,11 +54,17 @@ public class OrderService {
     }
 
     public Order provideDeliveryTime(long orderId, int deliveryTime) {
-        return null;
+        var order = orderRepository.getById(orderId);
+        order.setDeliveryTimeInMinutes(deliveryTime);
+        orderRepository.save(order);
+        return order;
     }
 
-    public void rateOrder(long orderId, Rating rating) {
-
+    public Order rateOrder(long orderId, Rating rating) {
+        var order = orderRepository.getById(orderId);
+        order.setRating(rating);
+        orderRepository.save(order);
+        return order;
     }
 
 }
