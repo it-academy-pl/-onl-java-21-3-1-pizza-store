@@ -34,7 +34,8 @@ public class PizzaController {
         Size size;
         String name;
         BigDecimal price;
-        List<Ingredient> ingredients;
+        List<String> ingredients;
+        List<Ingredient> additionalIngredients;
 
         public static PizzaResponse from(Pizza pizza) {
             return new PizzaResponse(
@@ -42,7 +43,8 @@ public class PizzaController {
                     pizza.getSize(),
                     pizza.getName(),
                     pizza.getPrice(),
-                    pizza.getIngredients()
+                    pizza.getIngredients(),
+                    pizza.getAdditionalIngredients()
             );
         }
     }

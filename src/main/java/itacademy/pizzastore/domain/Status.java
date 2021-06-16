@@ -7,5 +7,5 @@ public enum Status {
     BAKED,
     IN_THE_WAY,
     DELIVERED,
-    CANCEL
+    CANCELED
 }

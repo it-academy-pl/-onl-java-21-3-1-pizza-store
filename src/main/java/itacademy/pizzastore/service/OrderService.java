@@ -19,43 +19,34 @@ public class OrderService {
                 .map(Pizza::getPrice)
                 .reduce(BigDecimal.ZERO, BigDecimal::add);
       
-        var newOrder = new Order(pizzas, null, "", totalPrice, Status.NEW, 0, null);
+        var newOrder = new Order(pizzas, null, "", totalPrice, Status.NEW, 0, null, null);
         orderRepository.save(newOrder);
         return newOrder;
     }
 
     public Order provideDeliveryAddress(long orderId, Address deliveryAddress) {
-        (String city) -> System.out.print(city);
-        (String street) -> System.out.print(street);
-        (String hoseNumber) -> System.out.print(hoseNumber);
-        (String flatNumber) -> System.out.print(flatNumber);
+        var order = orderRepository.getById(orderId);
+        order.setDeliveryAddress(deliveryAddress);
+        orderRepository.save(order);
+        return order;
     }
 
     public Order choosePaymentType(long orderId, PaymentType paymentType) {
-        PaymentType allPaymentTypes [] = PaymentType.values();
-        for (PaymentType p: allPaymentTypes)
-            System.out.println(p);
-        System.out.println();
-
-        PaymentType pt = PaymentType.valueOf("CASH");
-                return pt;
+        var order = orderRepository.getById(orderId);
+        order.setPaymentType(paymentType);
+        orderRepository.save(order);
+        return order;
     }
 
     public Status cancel(long orderId) {
-        var status = orderRepository.getById(orderId);
-        status.setStatus(Status.CANCEL);
-        orderRepository.save(status);
-        return status;
+        var order = orderRepository.getById(orderId);
+        order.setStatus(Status.ANULLED);
+        orderRepository.save(order);
+        return order.getStatus();
     }
 
     public Status getStatusForOrder(long orderId) {
-        Status allStatuses [] = Status.values();
-        for (Status s: allStatuses)
-            System.out.println(s);
-        System.out.println();
-
-        Status st = Status.valueOf("IN_THE_WAY");
-        return st;
+        return orderRepository.getById(orderId).getStatus();
     }
 
     public Order provideDeliveryTime(long orderId, int deliveryTime) {
@@ -66,12 +57,8 @@ public class OrderService {
     }
 
     public void rateOrder(long orderId, Rating rating) {
-        var rateOrder = orderRepository.getById(orderId);
-        rateOrder.setRating(rating);
-        orderRepository.save(rateOrder);
+        var order = orderRepository.getById(orderId);
+        order.setRating(rating);
+        orderRepository.save(order);
     }
-
-
-    }
-
-
+}

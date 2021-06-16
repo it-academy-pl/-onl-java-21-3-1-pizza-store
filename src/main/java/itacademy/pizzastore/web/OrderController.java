@@ -44,6 +44,12 @@ public class OrderController {
         return ResponseEntity.ok().build();
     }
 
+    @PostMapping("/{id}/deliveryTime/{deliveryTime}")
+    public ResponseEntity<Void> deliveryTime(@PathVariable("id") long orderId, @PathVariable("deliveryTime") int deliveryTime) {
+        orderService.provideDeliveryTime(orderId, deliveryTime);
+        return ResponseEntity.ok().build();
+    }
+
     @Value
     private static class OrderResponse {
         private static long lastId = 0;
