@@ -56,9 +56,10 @@ public class OrderService {
         return order;
     }
 
-    public void rateOrder(long orderId, Rating rating) {
+    public Order rateOrder(long orderId, Rating rating) {
         var order = orderRepository.getById(orderId);
         order.setRating(rating);
         orderRepository.save(order);
+        return order;
     }
 }

@@ -28,7 +28,7 @@ public class OrderController {
         return OrderResponse.from(orderService.provideDeliveryAddress(orderId, address));
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/{id}/cancel")
     public Status orderCancel(@PathVariable("id") long orderId) {
         return orderService.cancel(orderId);
     }
