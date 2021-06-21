@@ -3,6 +3,7 @@ package itacademy.pizzastore.service;
 import itacademy.pizzastore.domain.*;
 import itacademy.pizzastore.repository.OrderInMemoryRepository;
 import itacademy.pizzastore.repository.OrderRepository;
+import itacademy.pizzastore.service.exceptions.OrderNotFoundException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -10,6 +11,7 @@ import java.math.BigDecimal;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class OrderServiceTest {
 
@@ -153,5 +155,11 @@ class OrderServiceTest {
         Rating result = orderRepository.getById(123).getRating();
 
         assertThat(result).isEqualTo(rating);
+    }
+
+    @Test
+    public void getStatusForOrder_orderDoesNotExists_throwsOrderNotFoundException() {
+        OrderNotFoundException exception = assertThrows(OrderNotFoundException.class, () -> orderService.getStatusForOrder(123));
+        assertThat(exception).hasMessage("Order with ID:123 not found!");
     }
 }

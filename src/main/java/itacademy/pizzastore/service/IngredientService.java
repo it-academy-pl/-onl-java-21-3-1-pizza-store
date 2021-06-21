@@ -19,6 +19,8 @@ public class IngredientService {
         return configuration.getAdditionalIngredients().values();
     }
 
+    //TODO: for non existing IDs throw an IngredientNotFoundException
+    //TODO: add the test for this case
     public List<Ingredient> fromIds(List<Long> ids) {
         return ids.stream()
                 .map(id -> configuration.getAdditionalIngredients().get(id))

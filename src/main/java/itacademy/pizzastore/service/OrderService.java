@@ -2,14 +2,18 @@ package itacademy.pizzastore.service;
 
 import itacademy.pizzastore.domain.*;
 import itacademy.pizzastore.repository.OrderRepository;
+import itacademy.pizzastore.service.exceptions.OrderNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
+//TODO: Check all the places for corner cases and throw an exceptions for all of them
+//TODO: add tests for the cases
 public class OrderService {
 
     private final OrderRepository orderRepository;
@@ -46,7 +50,9 @@ public class OrderService {
     }
 
     public Status getStatusForOrder(long orderId) {
-        return orderRepository.getById(orderId).getStatus();
+        return Optional.ofNullable(orderRepository.getById(orderId))
+                .map(Order::getStatus)
+                .orElseThrow(() -> new OrderNotFoundException("Order with ID:" + orderId + " not found!"));
     }
 
     public Order provideDeliveryTime(long orderId, int deliveryTime) {

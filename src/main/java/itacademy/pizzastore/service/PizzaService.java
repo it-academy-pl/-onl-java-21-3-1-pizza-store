@@ -26,6 +26,8 @@ public class PizzaService {
         return null;
     }
 
+    //TODO: for non existing IDs throw an PizzaNotFoundException
+    //TODO: add the test for this case
     public List<Pizza> fromIds(List<Long> ids) {
         return ids.stream()
                 .map(id -> configuration.getPizzas().get(id))
