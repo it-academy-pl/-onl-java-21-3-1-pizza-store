@@ -15,6 +15,7 @@ import java.util.stream.Collectors;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/ingredients")
+//TODO: validate client's requests where applicable and if something wrong - return error respons immediately!
 public class IngredientController {
 
     private final IngredientService ingredientService;

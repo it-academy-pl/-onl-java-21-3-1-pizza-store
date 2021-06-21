@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/pay")
+//TODO: validate client's requests where applicable and if something wrong - return error response immediately!
 public class PaymentController {
 
     private final PaymentService paymentService;

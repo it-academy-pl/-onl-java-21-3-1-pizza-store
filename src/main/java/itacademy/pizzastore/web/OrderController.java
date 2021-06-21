@@ -22,7 +22,7 @@ public class OrderController {
 
     @PostMapping
     public ResponseEntity<OrderResponse> createOrder(@RequestBody List<Long> pizzas) {
-        if(pizzas == null || pizzas.isEmpty()) {
+        if (pizzas == null || pizzas.isEmpty()) {
             return ResponseEntity.badRequest().build();
         }
 
