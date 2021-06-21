@@ -5,6 +5,7 @@ import itacademy.pizzastore.domain.Ingredient;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -20,7 +21,12 @@ public class IngredientService {
 
     //TODO: implement the method
     public List<Ingredient> fromIds(List<Long> ids) {
-        return List.of();
+        List<Ingredient> result = new ArrayList<>();
+        for (Long id : ids) {
+            Ingredient ingredient = configuration.getAdditionalIngredients().get(id);
+            result.add(ingredient);
+        }
+        return null;
     }
 
     public Ingredient typesIngredient() {
