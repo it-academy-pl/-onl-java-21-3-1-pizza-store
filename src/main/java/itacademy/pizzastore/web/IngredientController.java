@@ -4,6 +4,7 @@ import itacademy.pizzastore.domain.Ingredient;
 import itacademy.pizzastore.service.IngredientService;
 import lombok.RequiredArgsConstructor;
 import lombok.Value;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -21,6 +22,10 @@ public class IngredientController {
 
     @GetMapping("/list")
     public List<IngredientResponse> getAvailableIngredients() {
+//        if(getAvailableIngredients() == null) {
+//            return ResponseEntity.badRequest().build();
+//        }
+//
         return ingredientService.availableIngredients().stream()
                 .map(IngredientResponse::from)
                 .collect(Collectors.toList());
