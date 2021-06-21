@@ -5,9 +5,9 @@ import itacademy.pizzastore.domain.Ingredient;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -19,14 +19,10 @@ public class IngredientService {
         return configuration.getAdditionalIngredients().values();
     }
 
-    //TODO: implement the method
     public List<Ingredient> fromIds(List<Long> ids) {
-        List<Ingredient> result = new ArrayList<>();
-        for (Long id : ids) {
-            Ingredient ingredient = configuration.getAdditionalIngredients().get(id);
-            result.add(ingredient);
-        }
-        return null;
+        return ids.stream()
+                .map(id -> configuration.getAdditionalIngredients().get(id))
+                .collect(Collectors.toList());
     }
 
     public Ingredient typesIngredient() {

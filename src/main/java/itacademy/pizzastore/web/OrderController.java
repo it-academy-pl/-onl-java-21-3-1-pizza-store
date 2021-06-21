@@ -16,7 +16,6 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/order")
-//TODO: validate client's requests where applicable and if something wrong - return error response immediately!
 public class OrderController {
 
     private final OrderService orderService;

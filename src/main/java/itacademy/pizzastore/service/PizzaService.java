@@ -6,10 +6,9 @@ import itacademy.pizzastore.domain.Size;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.math.BigDecimal;
 import java.util.Collection;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -28,13 +27,9 @@ public class PizzaService {
     }
 
     public List<Pizza> fromIds(List<Long> ids) {
-
-        List<Pizza> result = new ArrayList<>();
-        for (Long id: ids) {
-            Pizza pizza = configuration.getPizzas().get(id);
-            result.add(pizza);
-        }
-        return result;
+        return ids.stream()
+                .map(id -> configuration.getPizzas().get(id))
+                .collect(Collectors.toList());
     }
 
 }
