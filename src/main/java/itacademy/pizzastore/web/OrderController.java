@@ -21,7 +21,7 @@ public class OrderController {
     private final OrderService orderService;
 
     @PostMapping
-    public ResponseEntity<OrderResponse> createOrder(@RequestBody List<Long> pizzas) {
+    public ResponseEntity<OrderResponse> createOrder(@RequestBody List<Pizza> pizzas) {
         if(pizzas == null || pizzas.isEmpty()) {
             return ResponseEntity.badRequest().build();
         }
@@ -33,8 +33,16 @@ public class OrderController {
     }
 
     @PutMapping("/{id}/address")
-    public OrderResponse orderAddress(@PathVariable("id") long orderId, @RequestBody Address address) {
-        return OrderResponse.from(orderService.provideDeliveryAddress(orderId, address));
+//    public OrderResponse orderAddress(@PathVariable("id") long orderId, @RequestBody Address address) {
+//        return OrderResponse.from(orderService.provideDeliveryAddress(orderId, address));
+    public ResponseEntity<OrderResponse> orderAddress(@PathVariable("id") long orderId, @RequestBody Address address) {
+        if(address == null) {
+            return ResponseEntity.badRequest().build();
+        }
+
+        return ResponseEntity
+                .status(HttpStatus.CREATED)
+                .body(OrderResponse.from(orderService.provideDeliveryAddress(orderId, address)));
     }
 
     @DeleteMapping("/{id}/cancel")
@@ -43,18 +51,34 @@ public class OrderController {
     }
 
     @GetMapping("/{id}/status")
-    public Status orderStatus(@PathVariable("id") long orderId) {
-        return orderService.getStatusForOrder(orderId);
+//    public Status orderStatus(@PathVariable("id") long orderId) {
+//        return orderService.getStatusForOrder(orderId);
+    public ResponseEntity<Status> orderStatus(@PathVariable("id") long orderId) {
+        if (orderService.getStatusForOrder(orderId) == null) {
+            return ResponseEntity.badRequest().build();
+        }
+
+        return ResponseEntity
+                .status(HttpStatus.CREATED)
+                .body(orderService.getStatusForOrder(orderId));
     }
 
     @PostMapping("/{id}/rate")
-    public ResponseEntity<Void> orderRate(@PathVariable("id") long orderId, @RequestBody Rating rating) {
+        public ResponseEntity<Void> orderRate(@PathVariable("id") long orderId, @RequestBody Rating rating) {
+        if(rating == null) {
+            return ResponseEntity.noContent().build();
+        }
+
         orderService.rateOrder(orderId, rating);
         return ResponseEntity.ok().build();
     }
 
     @PostMapping("/{id}/deliveryTime/{deliveryTime}")
     public ResponseEntity<Void> deliveryTime(@PathVariable("id") long orderId, @PathVariable("deliveryTime") int deliveryTime) {
+        if(deliveryTime < 0) {
+            return ResponseEntity.badRequest().build();
+        }
+
         orderService.provideDeliveryTime(orderId, deliveryTime);
         return ResponseEntity.ok().build();
     }
