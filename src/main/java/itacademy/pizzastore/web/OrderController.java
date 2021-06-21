@@ -2,6 +2,7 @@ package itacademy.pizzastore.web;
 
 import itacademy.pizzastore.domain.*;
 import itacademy.pizzastore.service.OrderService;
+import itacademy.pizzastore.service.PizzaService;
 import lombok.RequiredArgsConstructor;
 import lombok.Value;
 import org.springframework.http.HttpStatus;
@@ -19,14 +20,15 @@ import java.util.List;
 public class OrderController {
 
     private final OrderService orderService;
+    private final PizzaService pizzaService;
 
     @PostMapping
-    public ResponseEntity<OrderResponse> createOrder(@RequestBody List<Long> pizzas) {
-        if(pizzas == null || pizzas.isEmpty()) {
+    public ResponseEntity<OrderResponse> createOrder(@RequestBody List<Long> ids) {
+        if(ids == null || ids.isEmpty()) {
             return ResponseEntity.badRequest().build();
         }
 
-        //TODO: fix the compilation error
+        List<Pizza> pizzas = pizzaService.fromIds(ids);
         return ResponseEntity
                 .status(HttpStatus.CREATED)
                 .body(OrderResponse.from(orderService.create(pizzas)));

@@ -6,6 +6,7 @@ import itacademy.pizzastore.domain.Size;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -22,11 +23,17 @@ public class PizzaService {
 
     //TODO: implement the method
     public Pizza customPizza(List<Long> ingredientIds, Size size) {
+
         return null;
     }
 
-    //TODO: implelent the method
     public List<Pizza> fromIds(List<Long> ids) {
-        return List.of();
+
+        List<Pizza> result = new ArrayList<>();
+        for (Long id: ids) {
+            Pizza pizza = configuration.getPizzas().get(id);
+            result.add(pizza);
+        }
+        return result;
     }
 }
