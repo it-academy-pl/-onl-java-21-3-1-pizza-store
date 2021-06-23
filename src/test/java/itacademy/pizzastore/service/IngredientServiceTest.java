@@ -14,14 +14,11 @@ import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
 class IngredientServiceTest {
     private IngredientService ingredientService;
     private ApplicationConfiguration configuration;
-    private PizzaService pizzaService;
 
     @BeforeEach
     public void setUp() {
         configuration = new ApplicationConfiguration();
         ingredientService = new IngredientService(configuration);
-        pizzaService = new PizzaService(configuration, ingredientService);
-
     }
 
     @Test

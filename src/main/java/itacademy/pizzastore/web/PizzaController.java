@@ -6,13 +6,12 @@ import itacademy.pizzastore.domain.Size;
 import itacademy.pizzastore.service.PizzaService;
 import lombok.RequiredArgsConstructor;
 import lombok.Value;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.math.BigDecimal;
 import java.util.List;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 @RestController
@@ -24,15 +23,9 @@ public class PizzaController {
 
     @GetMapping("/list")
     public List<PizzaResponse> getAvailablePizzas() {
-        if(getAvailablePizzas() == null) {
-            return (List<PizzaResponse>) ResponseEntity.badRequest().build();
-        }
-
-
         return pizzaService.availablePizzas().stream()
                 .map(PizzaResponse::from)
                 .collect(Collectors.toList());
-
     }
 
     @Value
