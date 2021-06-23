@@ -80,7 +80,7 @@ public class OrderController {
     }
 
     @Value
-    private static class OrderResponse {
+    public static class OrderResponse {
         private static long lastId = 0;
         long id;
         List<Pizza> pizzas;
